@@ -1,0 +1,10 @@
+build
+dist
+.idea
+*.spec
+.pytest_cache
+.coverage
+report.xml
+**/.test
+htmlcov
+venv
