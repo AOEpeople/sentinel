@@ -6,7 +6,7 @@ name: Build Release Assets
 
 jobs:
   build:
-    name: Upload Release Asset Linux
+    name: Upload Release Asset for ${{ matrix.TARGET }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -24,7 +24,7 @@ jobs:
             OUT_FILE_NAME: sentinel.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
           - os: ubuntu-latest
-            TARGET: windows
+            TARGET: linux
             CMD_BUILD: |
               pyinstaller --onefile main.py --name sentinel-linux
             OUT_FILE_NAME: sentinel-linux
