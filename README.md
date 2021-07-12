@@ -17,11 +17,10 @@ sentinel connect bash
 ```
 
 ### installation
-
-#### build from source
-- Check out GIT repository
-- install [pyinstaller](https://www.pyinstaller.org/)
-- `pyinstaller --onefile sentinel.py`
+Just download the latest executable from [Github releases](https://github.com/AOEpeople/sentinel/releases/latest). Eg.
+```shell script
+sudo curl -L -o /usr/local/bin/sentinel https://github.com/AOEpeople/sentinel/releases/download/v0.1.0/sentinel-linux && sudo chmod +x /usr/local/bin/sentinel
+```
 
 ### configuration
 Use `sentinel configure` to interactively configure your sentinel.
