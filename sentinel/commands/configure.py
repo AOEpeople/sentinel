@@ -5,8 +5,8 @@ from sentinel.config.config_repository import ConfigRepository
 
 
 @click.command()
-@click.option("--client-id", help="client id")
-@click.password_option("--client-secret", help="client secret")
+@click.option("--client-id", help="client id", prompt=True)
+@click.password_option("--client-secret", help="client secret", prompt=True)
 @click.option("--issuer", help="issuer to authorize against", prompt=True)
 @click.option("--allowed-hosts", help="comma separated list of allowed hosts to pass access token to", prompt=True)
 @click.option("--scopes", help="comma separated list of scopes to request", default="openid", prompt=True)
