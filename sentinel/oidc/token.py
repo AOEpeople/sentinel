@@ -25,5 +25,4 @@ class Token:
         return False
 
     def renew_expires_at_from_now(self):
-        if self.expires_at is None:
-            self.expires_at = int(time.time()) + self.expires_in
+        self.expires_at = int(time.time()) + self.expires_in
