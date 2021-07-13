@@ -13,20 +13,17 @@ jobs:
         include:
           - os: macos-latest
             TARGET: macos
-            CMD_BUILD: |
-              pyinstaller --onefile main.py --name sentinel-macos
+            CMD_BUILD: make run-package PACKAGE_NAME=sentinel-macos
             OUT_FILE_NAME: sentinel-macos
             ASSET_MIME: application/octet-stream
           - os: windows-latest
             TARGET: windows
-            CMD_BUILD: |
-              pyinstaller --onefile main.py --name sentinel.exe
+            CMD_BUILD: make run-package PACKAGE_NAME=sentinel.exe
             OUT_FILE_NAME: sentinel.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
           - os: ubuntu-latest
             TARGET: linux
-            CMD_BUILD: |
-              pyinstaller --onefile main.py --name sentinel-linux
+            CMD_BUILD: make run-package PACKAGE_NAME=sentinel-linux
             OUT_FILE_NAME: sentinel-linux
             ASSET_MIME: application/octet-stream
     steps:
@@ -41,11 +38,7 @@ jobs:
         uses: bruceadams/get-release@v1.2.2
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pyinstaller
-          pip install -r requirements.txt
+      - run: python -m pip install --upgrade pip
       - name: Build with pyinstaller for ${{matrix.TARGET}}
         run: ${{matrix.CMD_BUILD}}
       - name: Upload Release Asset
