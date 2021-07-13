@@ -17,15 +17,21 @@ class AuthorizationCodeHandler(http.server.BaseHTTPRequestHandler):
             auth_response = self.client.parse_response(AuthorizationResponse,
                                                        info=query,
                                                        sformat="urlencoded")
-            AuthorizationCodeHandler.state = auth_response["state"]
-            AuthorizationCodeHandler.code = auth_response["code"]
-            self.send_response(200)
-            self.end_headers()
-            with open(os.path.join(os.path.dirname(__file__), "../../..", "static", "oidc-ok.html")) as t:
-                self.wfile.write(str.encode(t.read()))
+            if "error_description" in auth_response:
+                self.send_error(500, auth_response["error_description"])
+            else:
+                if "state" in auth_response or "code" in auth_response:
+                    AuthorizationCodeHandler.state = auth_response["state"]
+                    AuthorizationCodeHandler.code = auth_response["code"]
+                    self.send_response(200)
+                    with open(os.path.join(os.path.dirname(__file__), "../../..", "static", "oidc-ok.html")) as t:
+                        self.wfile.write(str.encode(t.read()))
+                else:
+                    self.send_error(500, f"could not get state or code from callback query: {query}")
+
         else:
             self.send_response(404)
-            self.end_headers()
+        self.end_headers()
         AuthorizationCodeHandler.is_done = True
 
     def log_message(self, format, *args):

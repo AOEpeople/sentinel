@@ -5,6 +5,7 @@ from typing import List
 from sentinel.config.config import Config
 from sentinel.config.config_repository import ConfigRepository
 from sentinel.libs import helpers
+from sentinel.oidc.exceptions import RefreshTokenException
 from sentinel.oidc.http.authorization_code_handler import AuthorizationCodeHandler
 from sentinel.oidc.token import Token
 
@@ -57,8 +58,10 @@ class Client:
             token = self.token_repository.get()
             if token.is_expired() is False:
                 return token
-            # @todo what if refresh token is expired? check this and fall back to authorization
-            return self.__refresh_token(token)
+            try:
+                return self.__refresh_token(token)
+            except RefreshTokenException:
+                pass
         return self.__login_using_authorization_code()
 
     def __login_using_client_credentials(self) -> Token:
@@ -163,7 +166,7 @@ class Client:
             skew=10  # @todo https://github.com/OpenIDC/pyoidc/issues/785
         )
         if "access_token" not in response or "expires_in" not in response:
-            raise Exception(response)
+            raise RefreshTokenException(response)
 
         token.access_token = response["access_token"]
         token.expires_in = response["expires_in"]
