@@ -58,7 +58,7 @@ class Authorization:
                 client_id=ctx.options.authorization_client_id,
                 client_secret=ctx.options.authorization_client_secret,
                 issuer=ctx.options.authorization_issuer,
-                scopes=ctx.options.authorization_scopes
+                scopes=authorization_scopes
             )
             token = None
             if ctx.options.authorization_context not in [Proxy.CONTEXT_USER, Proxy.CONTEXT_CLIENT]:
