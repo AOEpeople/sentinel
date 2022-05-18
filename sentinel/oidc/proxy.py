@@ -6,6 +6,7 @@ from typing import List
 from mitmproxy.tools.main import mitmdump
 
 from sentinel.context import Context
+from sentinel.libs import helpers
 
 
 class Proxy:
@@ -70,4 +71,6 @@ class Proxy:
             path = sys._MEIPASS + f"/sentinel/oidc/mitmproxy/{addon}.py"
         else:
             path = os.path.dirname(os.path.abspath(__file__)) + f"/mitmproxy/{addon}.py"
+        if Context.verbose:
+            helpers.print_info(f"loading mitmproxy addon {path}")
         return path
