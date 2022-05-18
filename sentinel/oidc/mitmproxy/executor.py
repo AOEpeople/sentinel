@@ -7,8 +7,6 @@ from mitmproxy import ctx
 
 # pylint: disable-msg=missing-class-docstring
 class Executor:
-    done = False
-
     # pylint: disable-msg=no-self-use
     def load(self, loader):
         loader.add_option(
@@ -19,11 +17,9 @@ class Executor:
         )
 
     # pylint: disable-msg=no-self-use
-    def running(self):
-        if not self.done:
-            cmd = json.loads(ctx.options.executor_cmd)
-            asyncio.get_event_loop().run_in_executor(None, self.exec, cmd)
-            self.done = True
+    async def running(self):
+        cmd = json.loads(ctx.options.executor_cmd)
+        asyncio.get_event_loop().run_in_executor(None, self.exec, cmd)
 
     # pylint: disable-msg=no-self-use
     def exec(self, cmd):

@@ -14,7 +14,7 @@ def run(
     if env is None:
         env = os.environ.copy()
     else:
-        env = dict(**os.environ.copy(), **env)
+        env = {**os.environ.copy(), **env}
 
     command_as_string = " ".join(cmd)
     for value_to_mask in mask:
