@@ -3,13 +3,13 @@ run-package: install-dependencies package
 
 package:
 	python -m pip install pyinstaller
-	pyinstaller --onefile main.py --name $(PACKAGE_NAME)
+	pyinstaller --hidden-import='oic' --collect-all='oic' --hidden-import='sentinel' --collect-all='sentinel' --onefile main.py --name $(PACKAGE_NAME)
 
 lint:
 	pylint -v ./**/*py
 
 test:
-	 coverage run -m pytest ./tests --junitxml=report.xml
+	coverage run -m pytest ./tests --junitxml=report.xml
 
 coverage:
 	coverage html

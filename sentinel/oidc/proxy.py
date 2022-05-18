@@ -1,8 +1,11 @@
 import json
+import sys
 import os
 from typing import List
 
 from mitmproxy.tools.main import mitmdump
+
+from sentinel.context import Context
 
 
 class Proxy:
@@ -26,7 +29,8 @@ class Proxy:
         args += self.__get_authorization_args()
         args += self.__get_allowed_hosts_args()
         args += ["--set", f"listen_port={self.port}"]
-        args += ["--quiet"]
+        if not Context.verbose:
+            args += ["--quiet"]
         return mitmdump(args)
 
     def __get_executor_args(self) -> List[str]:
@@ -34,12 +38,12 @@ class Proxy:
         if self.cmd is None:
             return []
 
-        return ['-s', f"{self.__get_file_path()}/mitmproxy/executor.py", "--set",
+        return ['-s', self.__get_file_path("executor"), "--set",
                 f"executor_cmd={json.dumps(self.cmd)}"]
 
     def __get_authorization_args(self) -> List[str]:
         args = [
-            '-s', f"{self.__get_file_path()}/mitmproxy/authorization.py",
+            '-s', self.__get_file_path("authorization"),
         ]
         args += ["--set", f"authorization_context={self.context}"]
         args += ["--set", f"authorization_client_id={self.client_id}"]
@@ -61,5 +65,9 @@ class Proxy:
         return allow_hosts
 
     @staticmethod
-    def __get_file_path():
-        return os.path.dirname(os.path.abspath(__file__))
+    def __get_file_path(addon: str):
+        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+            path = sys._MEIPASS + f"/sentinel/oidc/mitmproxy/{addon}.py"
+        else:
+            path = os.path.dirname(os.path.abspath(__file__)) + f"/mitmproxy/{addon}.py"
+        return path
