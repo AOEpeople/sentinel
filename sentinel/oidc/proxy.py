@@ -1,6 +1,7 @@
 import json
 import sys
 import os
+import time
 from typing import List
 
 from mitmproxy.tools.main import mitmdump
@@ -73,4 +74,5 @@ class Proxy:
             path = os.path.dirname(os.path.abspath(__file__)) + f"/mitmproxy/{addon}.py"
         if Context.verbose:
             helpers.print_info(f"loading mitmproxy addon {path}")
+            time.sleep(30)
         return path
