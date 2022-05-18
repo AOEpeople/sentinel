@@ -19,7 +19,7 @@ sentinel connect bash
 ### installation
 Just download the latest executable from [Github releases](https://github.com/AOEpeople/sentinel/releases/latest). Eg.
 ```shell script
-sudo curl -L -o /usr/local/bin/sentinel https://github.com/AOEpeople/sentinel/releases/download/v0.1.0/sentinel-linux && sudo chmod +x /usr/local/bin/sentinel
+sudo curl -L -o /usr/local/bin/sentinel https://github.com/AOEpeople/sentinel/releases/latest/download/sentinel-linux && sudo chmod +x /usr/local/bin/sentinel
 ```
 
 ### configuration
