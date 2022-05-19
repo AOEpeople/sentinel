@@ -3,11 +3,11 @@
 import subprocess
 import os
 import sys
-from sentinel.libs.helpers import print_error, print_info
+from sentinel.libs.helpers import print_info
 
 
 def run(
-        cmd, env=None, capture_output=False, stdin=None, allow_failure=False, mask=None, cwd=None
+        cmd, env=None, capture_output=False, stdin=None, mask=None, cwd=None
 ):
     if mask is None:
         mask = []
@@ -26,12 +26,4 @@ def run(
     print_info(log_line)
 
     sys.stdout.flush()
-    result = subprocess.run(cmd, env=env, capture_output=capture_output, input=stdin, cwd=cwd)
-    if not allow_failure and result.returncode != 0:
-        if capture_output:
-            print_info(result.stdout.decode("UTF-8"))
-            print_error(result.stderr.decode("UTF-8"))
-        print_error(f"```{' '.join(cmd)}``` failed. aborting...")
-        sys.exit(1)
-
-    return result
+    return subprocess.run(cmd, env=env, capture_output=capture_output, input=stdin, cwd=cwd)
