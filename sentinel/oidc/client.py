@@ -104,6 +104,9 @@ class Client:
 
         http_handler = AuthorizationCodeHandler
         http_handler.client = self.oic_client
+        http_handler.is_done = False
+        http_handler.state = None
+        http_handler.code = None
 
         with http.server.HTTPServer(("localhost", config.callback_port), http_handler) as httpd:
             helpers.print_info(
