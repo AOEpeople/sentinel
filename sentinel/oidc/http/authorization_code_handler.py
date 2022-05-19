@@ -23,15 +23,17 @@ class AuthorizationCodeHandler(http.server.BaseHTTPRequestHandler):
                 if "state" in auth_response or "code" in auth_response:
                     AuthorizationCodeHandler.state = auth_response["state"]
                     AuthorizationCodeHandler.code = auth_response["code"]
-                    self.send_response(200)
                     with open(os.path.join(os.path.dirname(__file__), "../../..", "static", "oidc-ok.html")) as t:
+                        self.send_response(200)
+                        self.send_header('Connection', 'close')
+                        self.end_headers()
                         self.wfile.write(str.encode(t.read()))
                 else:
                     self.send_error(500, f"could not get state or code from callback query: {query}")
 
         else:
-            self.send_response(404)
-        self.end_headers()
+            self.send_error(404)
+
         AuthorizationCodeHandler.is_done = True
 
     def log_message(self, format, *args):
