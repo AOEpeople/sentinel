@@ -8,3 +8,4 @@ report.xml
 **/.test
 htmlcov
 venv
+sentinel.egg-info
