@@ -7,7 +7,6 @@ name: Build Release Assets
 jobs:
   build:
     name: Upload Release Asset for ${{ matrix.TARGET }}
-    timeout-minutes: 15
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -19,7 +18,7 @@ jobs:
             ASSET_MIME: application/octet-stream
           - os: windows-latest
             TARGET: windows
-            CMD_BUILD: make run-package PACKAGE_NAME=sentinel.exe
+            CMD_BUILD: make run-package-windows PACKAGE_NAME=sentinel.exe
             OUT_FILE_NAME: sentinel.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
           - os: ubuntu-latest
