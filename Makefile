@@ -15,7 +15,7 @@ package-windows:
 	python -m pip install pyinstaller wheel
 	pip install .
 	pyinstaller --paths sentinel \
-		--add-data "static\oidc-ok.html:static" \
+		--add-data "static/oidc-ok.html;static" \
 		--hidden-import='oic' --collect-all='oic' \
 		--hidden-import='sentinel' --collect-all='sentinel' \
 		--onefile main.py --name $(PACKAGE_NAME)
