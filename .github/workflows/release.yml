@@ -7,6 +7,7 @@ name: Build Release Assets
 jobs:
   build:
     name: Upload Release Asset for ${{ matrix.TARGET }}
+    timeout-minutes: 15
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
