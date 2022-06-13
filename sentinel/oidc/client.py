@@ -34,13 +34,16 @@ class Client:
     token_repository: "TokenRepository" = None
     client_credentials_secret: str = None
 
+    reset_http_handler: bool = True
+
     def __init__(
             self,
             client_id: str,
             client_secret: str,
             issuer: str,
             scopes: List[str],
-            use_cache: bool = True
+            use_cache: bool = True,
+            reset_http_handler: bool = True
     ):
         self.client_id = client_id
         self.client_secret = client_secret
@@ -49,6 +52,7 @@ class Client:
         self.use_cache = use_cache
         self.oic_client = self.__create_oic_client()
         self.token_repository = TokenRepository()
+        self.reset_http_handler = reset_http_handler
 
     def authorize_client(self):
         return self.__login_using_client_credentials()
@@ -104,9 +108,10 @@ class Client:
 
         http_handler = AuthorizationCodeHandler
         http_handler.client = self.oic_client
-        http_handler.is_done = False
-        http_handler.state = None
-        http_handler.code = None
+        if self.reset_http_handler:
+            http_handler.is_done = False
+            http_handler.state = None
+            http_handler.code = None
 
         with http.server.HTTPServer(("localhost", config.callback_port), http_handler) as httpd:
             helpers.print_info(

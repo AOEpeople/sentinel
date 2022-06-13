@@ -25,6 +25,7 @@ class TestClient(unittest.TestCase):
             client_secret=client_secret,
             issuer='issuer',
             scopes=["openid"],
+            reset_http_handler=False,
         )
 
         # execute
@@ -62,6 +63,7 @@ class TestClient(unittest.TestCase):
             client_secret="secret",
             issuer="issuer",
             scopes=["openid"],
+            reset_http_handler=False,
         )
 
         # execute
@@ -95,6 +97,7 @@ class TestClient(unittest.TestCase):
             client_secret="secret",
             issuer="issuer",
             scopes=["openid"],
+            reset_http_handler=False,
         )
 
         # execute
@@ -128,6 +131,7 @@ class TestClient(unittest.TestCase):
             client_secret="secret",
             issuer="issuer",
             scopes=["openid"],
+            reset_http_handler=False,
         )
 
         # execute
@@ -174,6 +178,7 @@ class TestClient(unittest.TestCase):
             client_secret="secret",
             issuer="issuer",
             scopes=["openid"],
+            reset_http_handler=False,
         )
 
         # execute
@@ -221,6 +226,7 @@ class TestClient(unittest.TestCase):
             client_secret="secret",
             issuer="issuer",
             scopes=["openid"],
+            reset_http_handler=False,
         )
 
         # execute
@@ -285,6 +291,7 @@ class TestClient(unittest.TestCase):
             client_secret="secret",
             issuer="issuer",
             scopes=["openid"],
+            reset_http_handler=False,
         )
 
         # execute
@@ -321,6 +328,7 @@ class TestClient(unittest.TestCase):
             issuer="issuer",
             scopes=["openid"],
             use_cache=True,
+            reset_http_handler=False,
         )
 
         # execute
@@ -353,7 +361,8 @@ class TestClient(unittest.TestCase):
             client_secret="secret",
             issuer="issuer",
             scopes=["openid"],
-            use_cache=True
+            use_cache=True,
+            reset_http_handler=False,
         )
 
         # execution
@@ -387,7 +396,8 @@ class TestClient(unittest.TestCase):
             client_secret="secret",
             issuer="issuer",
             scopes=["openid"],
-            use_cache=True
+            use_cache=True,
+            reset_http_handler=False,
         )
 
         # execution
@@ -428,7 +438,8 @@ class TestClient(unittest.TestCase):
             client_secret="secret",
             issuer="issuer",
             scopes=["openid"],
-            use_cache=True
+            use_cache=True,
+            reset_http_handler=False,
         )
 
         # execute
@@ -437,11 +448,3 @@ class TestClient(unittest.TestCase):
         # assert
         self.assertEqual(token.access_token, expected_access_token)
         token_repository_mock().get.assert_called_once()
-
-
-
-
-
-
-
-
